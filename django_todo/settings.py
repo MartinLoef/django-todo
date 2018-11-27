@@ -23,11 +23,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'hqast&%f969kyc_=jq987doxhb!j6l0hltbp6rck@e(^6(*mcx'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = development
 
-ALLOWED_HOSTS = ['django-todo-martinl.c9users.io',
-                'simple-django-todo-ml.herokuapp.com']
+ALLOWED_HOSTS = [os.getenv('C9_HOSTNAME'),
+                 os.getenv('HOSTNAME')]
 
+host = os.getenv('SITE_HOST')
+if host:
+    ALLOWED_HOSTS.append(host)
 
 # Application definition
 
