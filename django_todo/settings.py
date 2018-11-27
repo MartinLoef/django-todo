@@ -12,6 +12,12 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 import dj_database_url
+
+if os.environ.get("DEVLOPMENT"):
+    development = True
+else:
+    development = False
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -23,7 +29,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'hqast&%f969kyc_=jq987doxhb!j6l0hltbp6rck@e(^6(*mcx'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = development
 
 ALLOWED_HOSTS = [os.getenv('C9_HOSTNAME'),
                  os.getenv('HOSTNAME')]
@@ -78,13 +84,15 @@ WSGI_APPLICATION = 'django_todo.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
-DATABASES = {'default': dj_database_url.parse("postgres://mayfprtioaowkf:fb26bfdc755a8bc4451d6c64db712e5a68d7a7d9ad8f91fd26082bd618fad00e@ec2-54-247-119-167.eu-west-1.compute.amazonaws.com:5432/dffits1gqbeapr")}
+if development:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
+else:
+    DATABASES = {'default': dj_database_url.parse("postgres://mayfprtioaowkf:fb26bfdc755a8bc4451d6c64db712e5a68d7a7d9ad8f91fd26082bd618fad00e@ec2-54-247-119-167.eu-west-1.compute.amazonaws.com:5432/dffits1gqbeapr")}
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
